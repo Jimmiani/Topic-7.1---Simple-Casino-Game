@@ -87,8 +87,9 @@
         }
         public static void Casino()
         {
-            double points = 0, money = Math.Pow(2, (2 * points));
             bool done = false;
+            string mainScreen, earlyLeave;
+            double points = 0, money = Math.Pow(2, (2 * points));
             Random generator = new Random();
             int lives = 3,  coinGuess, coin = generator.Next(1, 2);
             Console.Clear();
@@ -99,14 +100,39 @@
             Console.WriteLine("Press Enter to continue");
             Console.ReadLine();
             Console.Clear();
-            while (!done)
+            while (points < 10 && lives > 0)
             {
-                coin = generator.Next(1, 2);
+                coin = generator.Next(1, 3);
                 Console.WriteLine("Ooh! A coin has flipped! What do you think it landed on?");
                 Console.WriteLine();
+                Console.WriteLine("Before you guess, would you like to leave and claim your money? You have earned " + money.ToString("C"));
+                Console.WriteLine();
+                Console.Write("Leave (yes/no): ");
+                earlyLeave = Console.ReadLine();
+                if (earlyLeave.ToLower().Trim() == "yes")
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Ok! Press Enter to return to main menu.");
+                    Console.ReadLine();
+                    Console.Clear();
+                    MainMenu();
+                      
+                }
+                else if (earlyLeave.ToLower().Trim() == "no")
+                {
+                    Console.WriteLine("Alright! Good luck!");
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.Write("Invalid Input. Keep going.");
+                    Console.WriteLine();
+                }    
+                
                 Console.Write("Heads (1) or Tails (2): ");
                 while (!int.TryParse(Console.ReadLine(), out coinGuess))
                     Console.Write("Invalid Numeric Input. Try again: ");
+                Console.WriteLine();
                 while (coinGuess != 1 && coinGuess != 2)
                 {
                     Console.Write("You need to enter in a 1 or a 2. Try again: ");
@@ -115,8 +141,47 @@
                 }
                 if (coinGuess == coin)
                 {
-                    points++;
+                    points += 1;
                     Console.WriteLine("That's right! You guessed correctly! You now have " + points + " points, and have earned " + money.ToString("C") + "!");
+                    Console.WriteLine();
+                    Console.WriteLine("Press Enter to continue.");
+                    Console.ReadLine();
+                    Console.Clear();
+                    
+                }
+                else if (coinGuess != coin)
+                {
+                    points--;
+                    lives--;
+                    Console.WriteLine("Nice try! That was incorrect! You now have " + lives + " lives left, have gone down to " + points + " points, and you're now at " + money.ToString("C") + "...");
+                    Console.WriteLine();
+                    Console.WriteLine("Press Enter to continue");
+                    Console.ReadLine();
+                    Console.Clear();
+                }
+            }
+            if (lives <= 0)
+            {
+                Console.WriteLine("That's too bad! You lost all your money, and went down to 0 lives! You know the rules! PAY UP! You owe me " + money.ToString("C") + "!!");
+                Console.WriteLine();
+                Console.WriteLine("Press 'Q' to return to main menu.");
+                mainScreen = Console.ReadLine();
+                if (mainScreen.ToUpper() == "Q")
+                {
+                    Console.Clear();
+                    MainMenu();
+                }
+            }
+            else if (points >= 10)
+            {
+                Console.WriteLine("WOW! Congratulations! You won the legendary jackpot of $1,048,576!! You are insanely lucky! Well done!");
+                Console.WriteLine();
+                Console.WriteLine("Press 'Q' to return to main menu.");
+                mainScreen = Console.ReadLine();
+                if (mainScreen.ToUpper() == "Q")
+                {
+                    Console.Clear();
+                    MainMenu();
                 }
             }
         }
