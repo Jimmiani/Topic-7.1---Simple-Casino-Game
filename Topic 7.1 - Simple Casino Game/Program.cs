@@ -41,7 +41,7 @@
                 }
                 else if (choice == "3")
                 {
-                    Math();
+                    Mathematics();
                     done = true;
                 }
                 else if (choice == "q")
@@ -87,9 +87,40 @@
         }
         public static void Casino()
         {
-
+            double points = 0, money = Math.Pow(2, (2 * points));
+            bool done = false;
+            Random generator = new Random();
+            int lives = 3,  coinGuess, coin = generator.Next(1, 2);
+            Console.Clear();
+            Console.WriteLine("This casino isn't for the faint of heart; let's see how you do. Will you let it break you? Or will you win it all?");
+            Console.WriteLine("...");
+            Console.WriteLine("Yeah it's not that deep... Good luck though!");
+            Console.WriteLine();
+            Console.WriteLine("Press Enter to continue");
+            Console.ReadLine();
+            Console.Clear();
+            while (!done)
+            {
+                coin = generator.Next(1, 2);
+                Console.WriteLine("Ooh! A coin has flipped! What do you think it landed on?");
+                Console.WriteLine();
+                Console.Write("Heads (1) or Tails (2): ");
+                while (!int.TryParse(Console.ReadLine(), out coinGuess))
+                    Console.Write("Invalid Numeric Input. Try again: ");
+                while (coinGuess != 1 && coinGuess != 2)
+                {
+                    Console.Write("You need to enter in a 1 or a 2. Try again: ");
+                    while (!int.TryParse(Console.ReadLine(), out coinGuess))
+                        Console.Write("Invalid Numeric Input. Try again: ");
+                }
+                if (coinGuess == coin)
+                {
+                    points++;
+                    Console.WriteLine("That's right! You guessed correctly! You now have " + points + " points, and have earned " + money.ToString("C") + "!");
+                }
+            }
         }
-        public static void Math()
+        public static void Mathematics()
         {
             string mainScreen;
             Console.Clear();
