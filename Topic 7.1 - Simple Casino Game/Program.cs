@@ -1,4 +1,6 @@
-﻿namespace Topic_7._1___Simple_Casino_Game
+﻿using System.Diagnostics;
+
+namespace Topic_7._1___Simple_Casino_Game
 {
     internal class Program
     {
@@ -10,39 +12,38 @@
         {
             string choice = "";
             bool done = false;
-            Console.WriteLine();
-            Console.WriteLine("\t\t\t\t\tWelcome to... THE BEST CASINO EVER!");
-            Console.WriteLine();
-            Console.WriteLine("Here, you can get rich sooner! Feel like a winner! Or even gamble your entire life away and die of poverty! How cool!");
-            Console.WriteLine("It's up to you to deicde your fate! Well not really, it's all luck; but where's the fun in that?!");
-            Console.WriteLine("Will you walk home a millionaire? Or will you walk home a disappointment? Only time will tell!");
-            Console.WriteLine();
-            Console.WriteLine("Please select an option:");
-            Console.WriteLine();
-            Console.WriteLine("1 - How to Play");
-            Console.WriteLine("2 - Play the Casino");
-            Console.WriteLine("3 - View the Math");
-            Console.WriteLine("Q - Quit");
-            Console.WriteLine();
             while (!done)
             {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine("\t\t\t\t\tWelcome to... THE BEST CASINO EVER!");
+                Console.WriteLine();
+                Console.WriteLine("Here, you can get rich sooner! Feel like a winner! Or even gamble your entire life away and die of poverty! How cool!");
+                Console.WriteLine("It's up to you to deicde your fate! Well not really, it's all luck; but where's the fun in that?!");
+                Console.WriteLine("Will you walk home a millionaire? Or will you walk home a disappointment? Only time will tell!");
+                Console.WriteLine();
+                Console.WriteLine("Please select an option:");
+                Console.WriteLine();
+                Console.WriteLine("1 - How to Play");
+                Console.WriteLine("2 - Play the Casino");
+                Console.WriteLine("3 - View the Math");
+                Console.WriteLine("Q - Quit");
+                Console.WriteLine();
+           
                 Console.Write("Enter option here: ");
                 choice = Console.ReadLine().ToLower().Trim();
                 Console.WriteLine();
                 if (choice == "1")
                 {
                     Rules();
-                    done = true;
                 }
                 else if (choice == "2")
                 {
                     Casino();
-                    done = true;
                 }
                 else if (choice == "3")
                 {
                     Mathematics();
-                    done = true;
                 }
                 else if (choice == "q")
                 {
@@ -54,7 +55,6 @@
         }
         public static void Rules()
         {
-            string mainScreen;
             Console.Clear();
             Console.WriteLine("How to Play:");
             Console.WriteLine();
@@ -77,13 +77,7 @@
             Console.WriteLine("ANOTHER NOTE: The money goes up EXPONENTIALLY! So don't stop too early! But you could also lose it all later on...");
             Console.WriteLine("Tricky choices, huh? Well that's what you get for coming to this casino. Good luck!");
             Console.WriteLine();
-            Console.WriteLine("Press 'Q' to return to home screen.");
-            mainScreen = Console.ReadLine();
-            if (mainScreen.ToUpper() == "Q")
-            {
-                Console.Clear();
-                MainMenu();
-            }
+            Console.WriteLine("Press 'ENTER' to return to home screen.");           
         }
         public static void Casino()
         {
@@ -100,7 +94,7 @@
             Console.WriteLine("Press Enter to continue");
             Console.ReadLine();
             Console.Clear();
-            while (points < 10 && lives > 0)
+            while (!done)
             {
                 coin = generator.Next(1, 3);
                 Console.WriteLine("Ooh! A coin has flipped! What do you think it landed on?");
@@ -120,10 +114,9 @@
                     {
                         Console.WriteLine();
                         Console.WriteLine("Ok! Press Enter to return to main menu.");
+                        done = true;
                         Console.ReadLine();
                         Console.Clear();
-                        MainMenu();
-
                     }
                     else if (earlyLeave.ToLower().Trim() == "no")
                     {
@@ -141,51 +134,53 @@
                     while (!int.TryParse(Console.ReadLine(), out coinGuess))
                         Console.Write("Invalid Numeric Input. Try again: ");
                 }
+                if (coin == 1)
+                {
+                    Console.WriteLine("It was heads!");
+                    DrawHeads();
+                } 
+                else if (coin == 2)
+                {
+                    Console.WriteLine("It was tails!");
+                    DrawTails();
+                }
                 if (coinGuess == coin)
                 {
-                    points += 1;
-                    Console.WriteLine("That's right! You guessed correctly! You now have " + points + " points, still have " + lives + " lives and have earned " + money.ToString("C") + "!");
+                    points ++;
+                    money = Math.Pow(2, (2 * points));
+                    Console.WriteLine("You guessed correctly! You now have " + points + " points, still have " + lives + " lives and have earned " + money.ToString("C") + "!");
                     Console.WriteLine();
                     Console.WriteLine("Press Enter to continue.");
                     Console.ReadLine();
                     Console.Clear();
-                    
+                    if (points > 10)
+                    {
+                        done = true;
+                        Console.WriteLine("WOW! Congratulations! You won the legendary jackpot of $1,048,576!! You are insanely lucky! Well done!");
+                        Console.WriteLine();
+                        
+                    }
                 }
                 else if (coinGuess != coin)
                 {
                     points--;
                     lives--;
+                    money = Math.Pow(2, (2 * points));
                     Console.WriteLine("Nice try! That was incorrect! You now have " + lives + " lives left, have gone down to " + points + " points, and you're now at " + money.ToString("C") + "...");
                     Console.WriteLine();
                     Console.WriteLine("Press Enter to continue");
                     Console.ReadLine();
                     Console.Clear();
+                    if (lives < 0)
+                    {
+                        done = true;
+                        Console.WriteLine("That's too bad! You lost all your money, and went down to 0 lives! You know the rules! PAY UP! You owe me " + money.ToString("C") + "!!");
+                        Console.WriteLine();
+                    }
                 }
             }
-            if (lives <= 0)
-            {
-                Console.WriteLine("That's too bad! You lost all your money, and went down to 0 lives! You know the rules! PAY UP! You owe me " + money.ToString("C") + "!!");
-                Console.WriteLine();
-                Console.WriteLine("Press 'Q' to return to main menu.");
-                mainScreen = Console.ReadLine();
-                if (mainScreen.ToUpper() == "Q")
-                {
-                    Console.Clear();
-                    MainMenu();
-                }
-            }
-            else if (points >= 10)
-            {
-                Console.WriteLine("WOW! Congratulations! You won the legendary jackpot of $1,048,576!! You are insanely lucky! Well done!");
-                Console.WriteLine();
-                Console.WriteLine("Press 'Q' to return to main menu.");
-                mainScreen = Console.ReadLine();
-                if (mainScreen.ToUpper() == "Q")
-                {
-                    Console.Clear();
-                    MainMenu();
-                }
-            }
+            Console.WriteLine("Press 'ENTER' to return to main menu.");
+            Console.ReadLine();
         }
         public static void Mathematics()
         {
@@ -230,13 +225,25 @@
             Console.WriteLine("This makes it so the money gets exponentially higher, the longer the user plays.");
             Console.WriteLine("This makes the money seem more desirable, and less likely for the user to back out once they've earned a lot of points.");
             Console.WriteLine();
-            Console.WriteLine("Thanks for reading! Press 'Q' to return to home screen.");
-            mainScreen = Console.ReadLine();
-            if (mainScreen.ToUpper() == "Q")
-            {
-                Console.Clear();
-                MainMenu();
-            }
+            Console.WriteLine("Thanks for reading! Press 'ENTER' to return to home screen.");
+            Console.ReadLine();
         }
+        public static void DrawTails()
+        {
+            Console.WriteLine("  ,---.");
+            Console.WriteLine(" ' __O>`");
+            Console.WriteLine("( (__/  )");
+            Console.WriteLine(" .-----,");
+            Console.WriteLine("  `---'");
+        }
+        public static void DrawHeads()
+        {
+            Console.WriteLine("  ,---.");
+            Console.WriteLine(" '     `");
+            Console.WriteLine("(  ಠ_ಠ  )");
+            Console.WriteLine(" .     ,");
+            Console.WriteLine("  `---'");
+        }
+
     }
 }
