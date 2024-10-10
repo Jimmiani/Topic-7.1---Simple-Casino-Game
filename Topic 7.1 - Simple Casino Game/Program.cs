@@ -95,7 +95,7 @@
             Console.Clear();
             Console.WriteLine("This casino isn't for the faint of heart; let's see how you do. Will you let it break you? Or will you win it all?");
             Console.WriteLine("...");
-            Console.WriteLine("Yeah it's not that deep... Good luck though!");
+            Console.WriteLine("Yeah I guess it's not that deep... Good luck though!");
             Console.WriteLine();
             Console.WriteLine("Press Enter to continue");
             Console.ReadLine();
@@ -105,30 +105,32 @@
                 coin = generator.Next(1, 3);
                 Console.WriteLine("Ooh! A coin has flipped! What do you think it landed on?");
                 Console.WriteLine();
-                Console.WriteLine("Before you guess, would you like to leave and claim your money? You have earned " + money.ToString("C"));
-                Console.WriteLine();
-                Console.Write("Leave (yes/no): ");
-                earlyLeave = Console.ReadLine();
-                if (earlyLeave.ToLower().Trim() == "yes")
+                if (points >= 1)
                 {
+                    Console.WriteLine("Before you guess, would you like to leave and claim your money? You have earned " + money.ToString("C"));
                     Console.WriteLine();
-                    Console.WriteLine("Ok! Press Enter to return to main menu.");
-                    Console.ReadLine();
-                    Console.Clear();
-                    MainMenu();
-                      
+                    Console.Write("Leave (yes/no): ");
+                    earlyLeave = Console.ReadLine();
+                    while (earlyLeave.ToLower() != "yes" && earlyLeave.ToLower() != "no")
+                    {
+                        Console.Write("Invalid Input. Try again: ");
+                        earlyLeave = Console.ReadLine();
+                    }
+                    if (earlyLeave.ToLower().Trim() == "yes")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Ok! Press Enter to return to main menu.");
+                        Console.ReadLine();
+                        Console.Clear();
+                        MainMenu();
+
+                    }
+                    else if (earlyLeave.ToLower().Trim() == "no")
+                    {
+                        Console.WriteLine("Alright! Good luck!");
+                        Console.WriteLine();
+                    }
                 }
-                else if (earlyLeave.ToLower().Trim() == "no")
-                {
-                    Console.WriteLine("Alright! Good luck!");
-                    Console.WriteLine();
-                }
-                else
-                {
-                    Console.Write("Invalid Input. Keep going.");
-                    Console.WriteLine();
-                }    
-                
                 Console.Write("Heads (1) or Tails (2): ");
                 while (!int.TryParse(Console.ReadLine(), out coinGuess))
                     Console.Write("Invalid Numeric Input. Try again: ");
@@ -142,7 +144,7 @@
                 if (coinGuess == coin)
                 {
                     points += 1;
-                    Console.WriteLine("That's right! You guessed correctly! You now have " + points + " points, and have earned " + money.ToString("C") + "!");
+                    Console.WriteLine("That's right! You guessed correctly! You now have " + points + " points, still have " + lives + " lives and have earned " + money.ToString("C") + "!");
                     Console.WriteLine();
                     Console.WriteLine("Press Enter to continue.");
                     Console.ReadLine();
