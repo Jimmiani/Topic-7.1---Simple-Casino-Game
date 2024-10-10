@@ -113,10 +113,8 @@ namespace Topic_7._1___Simple_Casino_Game
                     if (earlyLeave.ToLower().Trim() == "yes")
                     {
                         Console.WriteLine();
-                        Console.WriteLine("Ok! Press Enter to return to main menu.");
+                        Console.WriteLine("Ok!");
                         done = true;
-                        Console.ReadLine();
-                        Console.Clear();
                     }
                     else if (earlyLeave.ToLower().Trim() == "no")
                     {
@@ -124,58 +122,91 @@ namespace Topic_7._1___Simple_Casino_Game
                         Console.WriteLine();
                     }
                 }
-                Console.Write("Heads (1) or Tails (2): ");
-                while (!int.TryParse(Console.ReadLine(), out coinGuess))
-                    Console.Write("Invalid Numeric Input. Try again: ");
-                Console.WriteLine();
-                while (coinGuess != 1 && coinGuess != 2)
+                if (!done)
                 {
-                    Console.Write("You need to enter in a 1 or a 2. Try again: ");
+                    Console.Write("Heads (1) or Tails (2): ");
                     while (!int.TryParse(Console.ReadLine(), out coinGuess))
                         Console.Write("Invalid Numeric Input. Try again: ");
-                }
-                if (coin == 1)
-                {
-                    Console.WriteLine("It was heads!");
-                    DrawHeads();
-                } 
-                else if (coin == 2)
-                {
-                    Console.WriteLine("It was tails!");
-                    DrawTails();
-                }
-                if (coinGuess == coin)
-                {
-                    points ++;
-                    money = Math.Pow(2, (2 * points));
-                    Console.WriteLine("You guessed correctly! You now have " + points + " points, still have " + lives + " lives and have earned " + money.ToString("C") + "!");
                     Console.WriteLine();
-                    Console.WriteLine("Press Enter to continue.");
-                    Console.ReadLine();
-                    Console.Clear();
-                    if (points > 10)
+                    while (coinGuess != 1 && coinGuess != 2)
                     {
-                        done = true;
-                        Console.WriteLine("WOW! Congratulations! You won the legendary jackpot of $1,048,576!! You are insanely lucky! Well done!");
-                        Console.WriteLine();
-                        
+                        Console.Write("You need to enter in a 1 or a 2. Try again: ");
+                        while (!int.TryParse(Console.ReadLine(), out coinGuess))
+                            Console.Write("Invalid Numeric Input. Try again: ");
                     }
-                }
-                else if (coinGuess != coin)
-                {
-                    points--;
-                    lives--;
-                    money = Math.Pow(2, (2 * points));
-                    Console.WriteLine("Nice try! That was incorrect! You now have " + lives + " lives left, have gone down to " + points + " points, and you're now at " + money.ToString("C") + "...");
-                    Console.WriteLine();
-                    Console.WriteLine("Press Enter to continue");
-                    Console.ReadLine();
-                    Console.Clear();
-                    if (lives < 0)
+                    if (coin == 1)
                     {
-                        done = true;
-                        Console.WriteLine("That's too bad! You lost all your money, and went down to 0 lives! You know the rules! PAY UP! You owe me " + money.ToString("C") + "!!");
+                        Console.WriteLine("It was heads!");
                         Console.WriteLine();
+                        DrawHeads();
+                        Console.WriteLine();
+                    }
+                    else if (coin == 2)
+                    {
+                        Console.WriteLine("It was tails!");
+                        Console.WriteLine();
+                        DrawTails();
+                        Console.WriteLine();
+                    }
+                    if (coinGuess == coin)
+                    {
+                        points++;
+                        money = Math.Pow(2, (2 * points));
+                        if (points == 1 && lives == 1)
+                            Console.WriteLine("You guessed correctly! You now have " + points + " point, still have " + lives + " life and have earned " + money.ToString("C") + "!");
+                        else if (lives == 1)
+                            Console.WriteLine("You guessed correctly! You now have " + points + " points, still have " + lives + " life and have earned " + money.ToString("C") + "!");
+                        else if (points == 1)
+                            Console.WriteLine("You guessed correctly! You now have " + points + " point, still have " + lives + " lives and have earned " + money.ToString("C") + "!");
+                        else
+                            Console.WriteLine("You guessed correctly! You now have " + points + " points, still have " + lives + " lives and have earned " + money.ToString("C") + "!");
+                        Console.WriteLine();
+                        Console.WriteLine("Press Enter to continue.");
+                        Console.ReadLine();
+                        Console.Clear();
+                        if (points > 10)
+                        {
+                            done = true;
+                            Console.WriteLine("WOW! Congratulations! You won the legendary jackpot of $1,048,576!! You are insanely lucky! Well done!");
+                            Console.WriteLine();
+
+                        }
+                    }
+                    else if (coinGuess != coin)
+                    {
+                        if (lives >= 0)
+                            points--;
+                        else
+                            points = points;
+                        lives--;
+                        money = Math.Pow(2, (2 * points));
+                        if (lives == 0)
+                        {
+                            Console.WriteLine("Nice try! That was incorrect! You're on your last life, have gone down to " + points + " points, and you're now at " + money.ToString("C") + "...");
+                        }
+                        else if (lives == 1)
+                        {
+                            Console.WriteLine("Nice try! That was incorrect! You now have " + lives + " life left, have gone down to " + points + " points, and you're now at " + money.ToString("C") + "...");
+                        }
+                        else if (lives < 0)
+                        {
+                            done = true;
+                            Console.WriteLine("That's too bad! You lost all your money, and used up all your lives! You know the rules! PAY UP! You owe me " + money.ToString("C") + "!!");
+                            Console.WriteLine();
+                        }
+                        else
+                            Console.WriteLine("Nice try! That was incorrect! You now have " + lives + " lives left, have gone down to " + points + " points, and you're now at " + money.ToString("C") + "...");
+                        if (!done) 
+                        {   
+                            Console.WriteLine();
+                            Console.WriteLine("Press Enter to continue");
+                            Console.ReadLine();
+                            Console.Clear();
+                        }
+                        else
+                        {
+
+                        }
                     }
                 }
             }
@@ -239,9 +270,9 @@ namespace Topic_7._1___Simple_Casino_Game
         public static void DrawHeads()
         {
             Console.WriteLine("  ,---.");
-            Console.WriteLine(" '     `");
-            Console.WriteLine("(  ಠ_ಠ  )");
-            Console.WriteLine(" .     ,");
+            Console.WriteLine(" '__ __`");
+            Console.WriteLine("(  O  O )");
+            Console.WriteLine(" .  __ ,");
             Console.WriteLine("  `---'");
         }
 
