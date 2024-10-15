@@ -6,10 +6,6 @@ namespace Topic_7._1___Simple_Casino_Game
     {
         static void Main(string[] args)
         {
-            MainMenu();
-        }
-        public static void MainMenu()
-        {
             string choice = "";
             bool done = false;
             while (!done)
@@ -29,7 +25,6 @@ namespace Topic_7._1___Simple_Casino_Game
                 Console.WriteLine("3 - View the Math");
                 Console.WriteLine("Q - Quit");
                 Console.WriteLine();
-           
                 Console.Write("Enter option here: ");
                 choice = Console.ReadLine().ToLower().Trim();
                 Console.WriteLine();
@@ -48,10 +43,10 @@ namespace Topic_7._1___Simple_Casino_Game
                 else if (choice == "q")
                 {
                     done = true;
-                }
-                else
-                    Console.WriteLine("Invalid Input");
+                }  
             }
+            Console.WriteLine();
+            Console.WriteLine("Ok! Goodbye, buckaroo!");
         }
         public static void Rules()
         {
@@ -73,16 +68,17 @@ namespace Topic_7._1___Simple_Casino_Game
             Console.WriteLine("NOTE: If you run out of lives, you owe me ALL the money you were about to win before you lost!");
             Console.WriteLine("If you get to 10 points without losing all your lives, you win the LEGENDARY JACKPOT OF $1,048,576!!");
             Console.WriteLine("But don't think that it's so easy... the chances of guessing correctly 10 times in a row are EXTREMELY small!");
-            Console.WriteLine("However, I will let you stop whenever you want, and collect ALL the money you have earned up to date.");
+            Console.WriteLine("However, I will let you stop once you've earned over $64.00, and collect ALL the money you have earned up to date.");
             Console.WriteLine("ANOTHER NOTE: The money goes up EXPONENTIALLY! So don't stop too early! But you could also lose it all later on...");
             Console.WriteLine("Tricky choices, huh? Well that's what you get for coming to this casino. Good luck!");
             Console.WriteLine();
-            Console.WriteLine("Press 'ENTER' to return to home screen.");           
+            Console.WriteLine("Press 'ENTER' to return to home screen.");
+            Console.ReadLine();
         }
         public static void Casino()
         {
             bool done = false;
-            string mainScreen, earlyLeave;
+            string earlyLeave;
             double points = 0, money = Math.Pow(2, (2 * points));
             Random generator = new Random();
             int lives = 3,  coinGuess, coin = generator.Next(1, 2);
@@ -99,7 +95,7 @@ namespace Topic_7._1___Simple_Casino_Game
                 coin = generator.Next(1, 3);
                 Console.WriteLine("Ooh! A coin has flipped! What do you think it landed on?");
                 Console.WriteLine();
-                if (points >= 1)
+                if (points >= 3)
                 {
                     Console.WriteLine("Before you guess, would you like to leave and claim your money? You have earned " + money.ToString("C"));
                     Console.WriteLine();
@@ -176,11 +172,11 @@ namespace Topic_7._1___Simple_Casino_Game
                     {
                         if (lives >= 0)
                             points--;
-                        else
-                            points = points;
                         lives--;
                         money = Math.Pow(2, (2 * points));
-                        if (lives == 0)
+                        if (points == 1 && lives == 1)
+                            Console.WriteLine("Nice try! That was incorrect! You're on your last life, have gone down to " + points + " point, and you're now at " + money.ToString("C") + "...");
+                        else if (lives == 0)
                         {
                             Console.WriteLine("Nice try! That was incorrect! You're on your last life, have gone down to " + points + " points, and you're now at " + money.ToString("C") + "...");
                         }
@@ -215,7 +211,6 @@ namespace Topic_7._1___Simple_Casino_Game
         }
         public static void Mathematics()
         {
-            string mainScreen;
             Console.Clear();
             Console.WriteLine("Hmm... didn't think anyone would even want to see this. Cool!"); 
             Console.WriteLine("I'll let you know the chances of winning the jackpot and the equation I used for the money.");
